@@ -93,4 +93,84 @@ public class Studentcontroller {
         return "no matching record found for given roll no";
     }
 
+    // Patch @PatchMapping
+    @PatchMapping("/updatestudent")
+    public String updatestudent(@RequestParam int rollno,
+                                @RequestBody Student newstud){
+        Student existingstudent = new Student();
+
+
+        //step 2
+        for(Student s:students){
+
+            if(s.getRollno()==rollno){
+
+                existingstudent=s;
+            }
+        }
+
+        // step 3
+        if(existingstudent.getRollno()==0){
+
+            return "no matching found for given roll no";
+        }
+
+        // Step 4
+        if(newstud.getName()==null&&
+           newstud.getCourse()==null
+           && newstud.getMarks()==0.0){
+            return "not new data provide";
+        }
+
+        // step 5
+        if(newstud.getName() != null){
+            existingstudent.setName(newstud.getName());
+        }
+
+        if(newstud.getCourse() != null){
+
+            existingstudent.setCourse(newstud.getCourse());
+        }
+        if(newstud.getMarks() != 0.0){
+            existingstudent.setMarks(newstud.getMarks());
+        }
+
+        return "student data is updated";
+    }
+
+    @PutMapping("/updatestude")
+    public String updatestude(@RequestParam int rollno,
+                              @RequestBody Student newstude){
+
+        // step 1
+        Student existingstudent= new Student();
+
+        //step 2
+        for(Student s: students){
+
+            if(s.getRollno()== rollno){
+                existingstudent=s;
+            }
+        }
+
+        //step 3
+        if(existingstudent.getRollno()==0){
+
+            return "no matching records found in for given roll no";
+        }
+
+        if(newstude.getName()==null
+        || newstude.getCourse()==null
+        || newstude.getMarks()==0.0){
+            return "need to provide entire objects";
+        }
+
+        existingstudent.setName(newstude.getName());
+        existingstudent.setCourse(newstude.getCourse());
+        existingstudent.setMarks(newstude.getMarks());
+
+
+        return "student data is updated";
+    }
+
 }
